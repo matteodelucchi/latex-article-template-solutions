@@ -1,0 +1,44 @@
+name: LaTeX Build with Docker
+
+on:
+  push:
+    branches:
+      - main
+      - exercise-5
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: texlive/texlive
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Compile LaTeX document
+      run: |
+        pdflatex main.tex
+        bibtex main
+        pdflatex main.tex
+        pdflatex main.tex
+    - name: Upload PDF
+      uses: actions/upload-artifact@v4
+      with:
+        name: main.pdf
+        path: main.pdf
+        
+  comment:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - name: Comment on Pull Request
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v6
+      with:
+          script: |
+              const { context } = require('@actions/github');
+              const artifactUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/suites/${context.runId}/artifacts/${context.runId}`;
+              github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: context.issue.number,
+              body: `The compiled PDF can be downloaded here.`
+              });
