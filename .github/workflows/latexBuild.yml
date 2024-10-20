@@ -4,7 +4,6 @@ on:
   push: 
     branches:
       - main
-      - exercise-3 # trigger the workflow on the exercise-3 branch for testing
 
 jobs:
   build:
