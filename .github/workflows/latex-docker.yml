@@ -45,7 +45,6 @@ jobs:
           uses: actions/github-script@v6
           with:
             script: |
-              const { context } = require('@actions/github');
               const fs = require('fs');
               const artifactUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}/artifacts`;
               const comment = `The PDF has been generated. You can download it [here](${artifactUrl}).`;
