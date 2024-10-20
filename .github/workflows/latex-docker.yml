@@ -38,7 +38,6 @@ jobs:
       uses: actions/github-script@v6
       with:
           script: |
-              const { context } = require('@actions/github');
               const artifactUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/suites/${context.runId}/artifacts/${context.runId}`;
               github.rest.issues.createComment({
               ...context.repo,
