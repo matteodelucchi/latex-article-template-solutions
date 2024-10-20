@@ -30,7 +30,7 @@ jobs:
         name: main.pdf
         path: main.pdf
   
-    comment:
+  comment:
       needs: build
       runs-on: ubuntu-latest
       
