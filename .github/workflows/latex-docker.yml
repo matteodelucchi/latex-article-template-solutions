@@ -8,7 +8,7 @@ on:
   pull_request:
 
 permissions:
-  issues: write
+  pull-requests: write 
 
 jobs:
   build:
@@ -35,7 +35,6 @@ jobs:
     needs: build
     steps:
     - name: Comment on Pull Request
-      if: github.event_name == 'pull_request'
       uses: actions/github-script@v6
       with:
           script: |
@@ -44,5 +43,5 @@ jobs:
               github.rest.issues.createComment({
               ...context.repo,
               issue_number: context.issue.number,
-              body: `The compiled PDF can be downloaded here.`
+              body: `The compiled PDF can be downloaded here: ${artifactUrl}`
               });
