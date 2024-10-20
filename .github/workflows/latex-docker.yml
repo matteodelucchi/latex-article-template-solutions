@@ -37,8 +37,8 @@ jobs:
       steps:
       - name: Get the artifact URL
         id: get-url
-        run: echo "Artifact URL: ${{ github.event.pull_request.html_url }}/artifacts/main.pdf"
-      
+        run: echo "url=${{ github.event.pull_request.html_url }}/artifacts/main.pdf" >> $GITHUB_ENV
+
       - name: Comment on the pull request
         uses: peter-evans/create-or-update-comment@v2
         with:
