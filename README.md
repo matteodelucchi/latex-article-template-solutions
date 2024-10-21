@@ -56,8 +56,8 @@ By completing the following tasks, you will gain practical experience in setting
 4. **Add a Second Workflow Using the TeX Live Docker Image**:
    - Create a new workflow file `.github/workflows/latex-docker.yml` that uses the [TeX Live Docker image](https://hub.docker.com/r/texlive/texlive) to compile the document.
    - Ensure this workflow runs on every push to the `main` branch.
-   - Observe the differences in the pipeline execution and environment setup. What do you observe?
-   ** Solution**: The pipeline execution time is significantly reduced when using the TeX Live Docker image. The environment setup is also simplified as the necessary dependencies are already included in the Docker image.
+   - Observe the differences in the pipeline execution and environment setup. What do you observe?  
+   **Solution**: The pipeline execution time is significantly reduced when using the TeX Live Docker image. The environment setup is also simplified as the necessary dependencies are already included in the Docker image.
 
 ## Bonus Exercise
 
