@@ -50,12 +50,6 @@ jobs:
           # Can be "open", "closed", or "all".  Defaults to "open".
           state: open
 
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: main.pdf
-          path: main.pdf
-          
       - name: Get the artifact URL
         id: get-url # Use this ID to refer to the step later
         run: echo "url=${{ needs.build.outputs.artifact-url }}" >> $GITHUB_ENV # Add the output to the environment
