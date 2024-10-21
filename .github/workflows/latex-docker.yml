@@ -46,29 +46,14 @@ jobs:
         with:
           # Can be "open", "closed", or "all".  Defaults to "open".
           state: open
-      # This will echo "Your PR is 7", or be skipped if there is no current PR.
-      - name: Echo PR number
-        run: echo "Your PR is ${PR}"
-        if: success() && steps.findPr.outputs.number
-        env:
-          PR: ${{ steps.findPr.outputs.pr }}
-          
+
       - name: Get the artifact URL
         id: get-url
         run: echo "url=${{ github.event.pull_request.html_url }}/artifacts/main.pdf" >> $GITHUB_ENV
-
-      - name: debugging
-        run: echo $url &&
-              echo ${{ github.event.pull_request.html_url }}/artifacts/main.pdf &&
-              echo ${{ github.event.number}} &&
-              echo ${{ github.event.pull_request }} &&
-              echo ${{ github.event.pull_request.number }} &&
-              echo ${{ github.event.issue.number }} &&
-              echo ${{ env.PR_NUMBER }}
 
       - name: Comment on the pull request
         uses: peter-evans/create-or-update-comment@v2
         with:
           token: ${{ env.GITHUB_TOKEN }}
-          issue-number: ${{ env.PR_NUMBER }}
-          body: "The compiled PDF is available here."
+          issue-number: ${{ steps.findPr.outputs.pr }}
+          body: "The compiled PDF is available here: ${{ steps.get-url.outputs.url }}"
