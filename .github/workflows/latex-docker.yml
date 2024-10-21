@@ -35,25 +35,24 @@ jobs:
       needs: build
       runs-on: ubuntu-latest
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PR_NUMBER: ${{ github.event.pull_request.number || github.event.issue.number }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Environment variables can be set like this
       
       steps:
       - uses: actions/checkout@v4
         # Find the PR associated with this push, if there is one.
       - uses: jwalton/gh-find-current-pr@master
-        id: findPr
+        id: findPr # Use this ID to refer to the step later
         with:
           # Can be "open", "closed", or "all".  Defaults to "open".
           state: open
 
       - name: Get the artifact URL
-        id: get-url
-        run: echo "url=${{ github.event.pull_request.html_url }}/artifacts/main.pdf" >> $GITHUB_ENV
+        id: get-url # Use this ID to refer to the step later
+        run: echo "url=${{ github.event.pull_request.html_url }}/artifacts/main.pdf" >> $GITHUB_ENV # Add the output to the environment
 
       - name: Comment on the pull request
         uses: peter-evans/create-or-update-comment@v2
         with:
-          token: ${{ env.GITHUB_TOKEN }}
-          issue-number: ${{ steps.findPr.outputs.pr }}
-          body: "The compiled PDF is available here: ${{ steps.get-url.outputs.url }}"
+          token: ${{ env.GITHUB_TOKEN }} # Retrieve environment variables with the ${{ env.VARIABLE_NAME }} syntax
+          issue-number: ${{ steps.findPr.outputs.pr }} # Use the output from the `findPr` step
+          body: "The compiled PDF is available here: ${{ env.url }}" # Use the output from the `get-url` step
