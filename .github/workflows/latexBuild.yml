@@ -11,14 +11,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set up LaTeX
-      run: sudo apt-get install -y texlive-full
     - name: Compile LaTeX document
-      run: |
-        pdflatex main.tex
-        bibtex main
-        pdflatex main.tex
-        pdflatex main.tex
+      uses: dante-ev/latex-action@latest
+      with:
+        root_file: main.tex
     - name: Upload PDF
       uses: actions/upload-artifact@v4
       with:

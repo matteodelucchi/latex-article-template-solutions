@@ -51,11 +51,13 @@ By completing the following tasks, you will gain practical experience in setting
    - Go to the [GitHub Marketplace](https://github.com/marketplace?type=actions) and search for an action that can compile LaTeX documents (hint: use `texlive` as a keyword).
    - Modify the workflow to use an action to speed up the LaTeX compilation process.
    - Observe the pipeline run time before and after adding the action. What do you observe and why?
+   **Solution**: The pipeline run time is significantly reduced after adding the action to speed up the LaTeX compilation process. This is because the action caches the TeX Live distribution, which reduces the setup time for the compilation process.
 
 4. **Add a Second Workflow Using the TeX Live Docker Image**:
    - Create a new workflow file `.github/workflows/latex-docker.yml` that uses the [TeX Live Docker image](https://hub.docker.com/r/texlive/texlive) to compile the document.
    - Ensure this workflow runs on every push to the `main` branch.
    - Observe the differences in the pipeline execution and environment setup. What do you observe?
+   ** Solution**: The pipeline execution time is significantly reduced when using the TeX Live Docker image. The environment setup is also simplified as the necessary dependencies are already included in the Docker image.
 
 ## Bonus Exercise
 
