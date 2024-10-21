@@ -6,6 +6,7 @@ on:
       - main
       - exercise-5
   pull_request:
+    types: [synchronize]
 
 permissions:
   pull-requests: write 
@@ -43,5 +44,5 @@ jobs:
         uses: peter-evans/create-or-update-comment@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          issue-number: ${{ github.event.pull_request.number }}
+          issue-number: ${{ github.event.number }}
           body: "The compiled PDF is available here."
