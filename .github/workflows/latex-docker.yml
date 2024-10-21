@@ -1,12 +1,13 @@
 name: LaTeX Build with Docker
 
 on:
-  push:
-    branches:
+  push: # Run on pushes ...
+    branches: # ... to the following branches
       - main
       - exercise-5
-  pull_request:
-    types: [synchronize]
+  pull_request: # ... and on PR activity ...
+    types: # ... of the following types... 
+      - synchronize # Run on PR syncs (pushes to branches with open PRs). More on types: https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#pull_request
 
 permissions:
   pull-requests: write 
@@ -46,6 +47,12 @@ jobs:
           # Can be "open", "closed", or "all".  Defaults to "open".
           state: open
 
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: main.pdf
+          path: main.pdf
+          
       - name: Get the artifact URL
         id: get-url # Use this ID to refer to the step later
         run: echo "url=${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts" >> $GITHUB_ENV # Add the output to the environment
@@ -55,4 +62,4 @@ jobs:
         with:
           token: ${{ env.GITHUB_TOKEN }} # Retrieve environment variables with the ${{ env.VARIABLE_NAME }} syntax
           issue-number: ${{ steps.findPr.outputs.pr }} # Use the output from the `findPr` step
-          body: "The compiled PDF is available here: ${{ env.url }}" # Use the output from the `get-url` step
+          body: "The recent output can be accessed [here](${{ env.url }}) or directly download the [main.pdf](./main.pdf)." # Use the output from the `get-url` step
