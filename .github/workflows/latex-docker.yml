@@ -4,21 +4,20 @@ on:
   push: # Run on pushes ...
     branches: # ... to the following branches
       - main
-      - exercise-5
   pull_request: # ... and on PR activity ...
     types: # ... of the following types... 
       - synchronize # Run on PR syncs (pushes to branches with open PRs). More on types: https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#pull_request
 
 permissions:
-  pull-requests: write 
+  pull-requests: write # Allow the workflow to comment on PRs
 
 jobs:
   build:
     runs-on: ubuntu-latest
     container:
       image: texlive/texlive
-    outputs:
-      artifact-url: ${{ steps.upload-artifact.outputs.artifact-url }}
+    outputs: # Define the output parameter of the build job to be used in the comment job
+      artifact-url: ${{ steps.upload-artifact.outputs.artifact-url }} # Use the output from the step with the ID `upload-artifact` which has the output `artifact-url` as described in the `upload-artifact` action documentation.
 
     steps:
     - uses: actions/checkout@v4
@@ -29,14 +28,14 @@ jobs:
         pdflatex main.tex
         pdflatex main.tex
     - name: Upload PDF
-      id: upload-artifact
+      id: upload-artifact # Use this ID to refer to the step in the `outputs` section of this job above.
       uses: actions/upload-artifact@v4
       with:
         name: main.pdf
         path: main.pdf
   
   comment:
-      needs: build
+      needs: build # This job depends on the `build` job. It will only run if the `build` job is successful.
       runs-on: ubuntu-latest
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Environment variables can be set like this
@@ -49,14 +48,16 @@ jobs:
         with:
           # Can be "open", "closed", or "all".  Defaults to "open".
           state: open
-
+          
       - name: Get the artifact URL
         id: get-url # Use this ID to refer to the step later
-        run: echo "url=${{ needs.build.outputs.artifact-url }}" >> $GITHUB_ENV # Add the output to the environment
-
+        # This line appends the output of the 'build' job (specifically the 'artifact-url' output) to the GITHUB_ENV environment file.
+        # The syntax ${{ needs.build.outputs.artifact-url }} is used to reference the output of a previous job named 'build'.
+        # 'needs.build.outputs.artifact-url' indicates that the current job depends on the 'build' job and is accessing its 'artifact-url' output.
+        run: echo "url=${{ needs.build.outputs.artifact-url }}" >> $GITHUB_ENV # This is another way to set environment variables
       - name: Comment on the pull request
         uses: peter-evans/create-or-update-comment@v2
         with:
           token: ${{ env.GITHUB_TOKEN }} # Retrieve environment variables with the ${{ env.VARIABLE_NAME }} syntax
           issue-number: ${{ steps.findPr.outputs.pr }} # Use the output from the `findPr` step
-          body: "The recent output can be accessed [here](${{ env.url }}) or directly download the [main.pdf](./main.pdf)." # Use the output from the `get-url` step
+          body: "The most recent PDF build is available for direct download [here](${{ env.url }})." # Use the output from the `get-url` step
