@@ -64,11 +64,23 @@ By completing the following tasks, you will gain practical experience in setting
 3. **Use an Action to Speed Up the Compilation Process**:
    - Go to the [GitHub Marketplace](https://github.com/marketplace?type=actions) and search for an action that can compile LaTeX documents (hint: use `texlive` as a keyword).
    - Modify the workflow to use an action to speed up the LaTeX compilation process.
+
+   **Solution**: In your `.github/workflows/latexBuild.yml` file, modify the original code under "steps" as follows:
+  ```bash
+    steps:
+    - uses: actions/checkout@v4
+    - name: Compile LaTeX document
+      uses: dante-ev/latex-action@latest
+      with:
+        root_file: main.tex
+  ```
+   
+
    - Observe the pipeline run time before and after adding the action. What do you observe and why?
    
    **Solution**: The pipeline run time is significantly reduced after adding the action to speed up the LaTeX compilation process. This is because the action caches the TeX Live distribution, which reduces the setup time for the compilation process.
 
-4. **Add a Second Workflow Using the TeX Live Docker Image**:
+3. **Add a Second Workflow Using the TeX Live Docker Image**:
    - Create a new workflow file `.github/workflows/latex-docker.yml` that uses the [TeX Live Docker image](https://hub.docker.com/r/texlive/texlive) to compile the document.
    - Ensure this workflow runs on every push to the `main` branch.
    - Observe the differences in the pipeline execution and environment setup. What do you observe?  
