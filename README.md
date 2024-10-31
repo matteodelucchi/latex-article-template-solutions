@@ -94,5 +94,5 @@ By completing the following tasks, you will gain practical experience in setting
       - You can use the `actions/upload-artifact`, `jwalton/gh-find-current-pr` and `peter-evans/create-or-update-comment` actions to achieve this.
    - Create a pull request and observe the comments. What do you observe?
 
-  _Note_: A [commented solutions script](https://github.com/matteodelucchi/latex-article-template-solutions/blob/84e57a14a99a20222369feccac4d476235ab0a71/.github/workflows/latex-docker.yml) for exercices 4-5 is available in the original solutions repository
+  _**Solution Note**_: A [commented solutions script](https://github.com/matteodelucchi/latex-article-template-solutions/blob/84e57a14a99a20222369feccac4d476235ab0a71/.github/workflows/latex-docker.yml) for exercices 4-5 is available in the original solutions repository
   
