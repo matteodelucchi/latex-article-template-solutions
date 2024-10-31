@@ -48,7 +48,7 @@ By completing the following tasks, you will gain practical experience in setting
 2. **Modify the Workflow to Run Only on the Main Branch**:
    - Edit the `.github/workflows/latexBuild.yml` file to ensure the workflow runs only on the `main` branch.
      
-     **Solution:** Head to `.github/workflows` sub-folder and perform the following modifications in the `latexBuild.yml` file:
+   **Solution:** Head to `.github/workflows` sub-folder and perform the following modifications in the `latexBuild.yml` file:
   ```bash
    on:
      push: 
@@ -59,7 +59,6 @@ By completing the following tasks, you will gain practical experience in setting
    
    **Solution**: Under Actions, you will notice that there no new workflow is triggered when pushing to a different branch. For example, if you complete this exercise on a branch called `exercise-2`, pushing to that branch will not trigger the workflow.
 
-   _Note_: You will find a [commented solutions script](https://github.com/matteodelucchi/latex-article-template-solutions/blob/84e57a14a99a20222369feccac4d476235ab0a71/.github/workflows/latexBuild.yml) in the original exercise solutions' repository.
 
 3. **Use an Action to Speed Up the Compilation Process**:
    - Go to the [GitHub Marketplace](https://github.com/marketplace?type=actions) and search for an action that can compile LaTeX documents (hint: use `texlive` as a keyword).
@@ -75,12 +74,13 @@ By completing the following tasks, you will gain practical experience in setting
         root_file: main.tex
   ```
    
-
    - Observe the pipeline run time before and after adding the action. What do you observe and why?
    
    **Solution**: The pipeline run time is significantly reduced after adding the action to speed up the LaTeX compilation process. This is because the action caches the TeX Live distribution, which reduces the setup time for the compilation process.
 
-3. **Add a Second Workflow Using the TeX Live Docker Image**:
+   _Note_: You will find the full [solutions script](https://github.com/matteodelucchi/latex-article-template-solutions/blob/84e57a14a99a20222369feccac4d476235ab0a71/.github/workflows/latexBuild.yml) in the original exercise solutions' repository.
+
+4. **Add a Second Workflow Using the TeX Live Docker Image**:
    - Create a new workflow file `.github/workflows/latex-docker.yml` that uses the [TeX Live Docker image](https://hub.docker.com/r/texlive/texlive) to compile the document.
    - Ensure this workflow runs on every push to the `main` branch.
    - Observe the differences in the pipeline execution and environment setup. What do you observe?  
@@ -93,4 +93,6 @@ By completing the following tasks, you will gain practical experience in setting
    - Edit the `.github/workflows/latex-docker.yml` file to include a second job that prints the link to the PDF artifact in the pull request but runs only upon successful completion of the first job.
       - You can use the `actions/upload-artifact`, `jwalton/gh-find-current-pr` and `peter-evans/create-or-update-comment` actions to achieve this.
    - Create a pull request and observe the comments. What do you observe?
+
+  _Note_: A [commented solutions script](https://github.com/matteodelucchi/latex-article-template-solutions/blob/84e57a14a99a20222369feccac4d476235ab0a71/.github/workflows/latex-docker.yml) for exercices 4-5 is available in the original solutions repository
   
