@@ -57,7 +57,9 @@ By completing the following tasks, you will gain practical experience in setting
   ```
    - Push a change to a different branch and observe if the workflow is triggered. What do you observe?
    
-   **Solution**: Under Actions, you will notice that there no new workflow is triggered when pushing to a different branch. For example, if you complete this exercise on a branch called `exercise-2`, pushing to that branch will not trigger the workflow. 
+   **Solution**: Under Actions, you will notice that there no new workflow is triggered when pushing to a different branch. For example, if you complete this exercise on a branch called `exercise-2`, pushing to that branch will not trigger the workflow.
+
+   _Note_: You will find a [commented solutions script](https://github.com/matteodelucchi/latex-article-template-solutions/blob/84e57a14a99a20222369feccac4d476235ab0a71/.github/workflows/latexBuild.yml) in the original exercise solutions' repository.
 
 3. **Use an Action to Speed Up the Compilation Process**:
    - Go to the [GitHub Marketplace](https://github.com/marketplace?type=actions) and search for an action that can compile LaTeX documents (hint: use `texlive` as a keyword).
